@@ -1,0 +1,121 @@
+<FirstScreen>:
+    BoxLayout:
+		orientation: 'vertical'
+        Image:
+            id: logo
+            source: "logo.jpg"
+            
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.3
+            spacing: 5
+    		Button:
+	    		text : 'Photo'
+		    	on_press: root.manager.current = "imagechoose"
+		    Button:
+			    text : 'Video'
+			    on_press: root.manager.current = "vplayscreen"
+        BoxLayout:
+            orientation:  'horizontal'
+            size_hint: 1, 0.3
+            Button:
+		        text: 'Bet Auystyru'
+                on_press: root.manager.current = "facer"
+
+<MyWidget>:
+    id:mywidget
+    FileChooserIconView:
+        id:filechooser
+        path: "C:/Users/am1ri/Desktop/DeepFake/Media"
+        on_selection : mywidget.selected(filechooser.selection)
+
+    Image:
+        id: my_image
+        source: ""
+    
+    BoxLayout:
+        orientation:'vertical'
+        Button:
+            text: 'Bet anyqtau'
+            on_release: mywidget.facedetect(filechooser.selection)
+        Button:
+            text: 'Ushburushtar'
+            on_release: mywidget.triangles(filechooser.selection)
+        Button:
+            text: 'Betti qiu'
+            on_release: mywidget.getmask(filechooser.selection)
+
+<ImageChoose>:
+    id:imagechoose
+    BoxLayout:
+        orientation: "vertical"
+        MyWidget
+            
+        Button:
+            text: 'Basty bet'
+            size_hint: 1, 0.1
+            on_press: root.manager.current = "main"
+
+##
+<Vplay>:
+    id:vplay
+    BoxLayout:
+        orientation:'vertical'
+        VideoPlayer:
+            id:video1
+            source: "output.avi"
+            state:"play"
+            options: {'eos': 'loop'}
+##
+
+<VideoPlayScreen>:
+    id:vplayscreen
+    BoxLayout:
+        id:box
+        orientation: "horizontal"
+        Vplay
+
+    Button:
+        text: 'Basty bet'
+        size_hint: 1, 0.1
+        on_press: root.manager.current = "main"
+
+<Facer>:
+    id:facer
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            FileChooserIconView:
+                id:filechooser1
+                path: "C:/Users/am1ri/Desktop/DeepFake/Media"
+                on_selection : facer.selected(filechooser1.selection)
+
+            Image:
+                id: my_image
+                source: ''
+
+        BoxLayout:
+            orientation: 'horizontal'
+            FileChooserIconView:
+                id:filechooser2
+                path: "C:/Users/am1ri/Desktop/DeepFake/Media"
+                on_selection : facer.playVideo(filechooser2.selection)
+        
+            VideoPlayer:
+                id:video1
+                source: ''
+                state:"play"
+                options: {'eos': 'loop'}
+        Button:
+            text: "Betti auystyru"
+            size_hint: 1, 0.1
+            on_press: facer.faceswap(filechooser1.selection, filechooser2.selection)
+            on_press: root.manager.current = "vplayscreen"
+
+        Button:
+            text: 'Basty bet'
+            size_hint: 1, 0.1
+            on_press: root.manager.current = "main"
